@@ -2,7 +2,7 @@
 // lograffe logging library.
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
-// file LICENSE.txt or copy at http ://www.boost.org/LICENSE_1_0.txt)
+// file LICENSE.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
 #pragma once
@@ -32,7 +32,7 @@ namespace lograffe
 #endif // LOGRAFFE_CUSTOM_LEVELS
 
 	static_assert(std::is_enum<log_level>::value, "custom log level has to be an enum");
-	static_assert(std::is_convertible<std::underlying_type<log_level>::type, uint32_t>::value,
-		"custom log level type should be convertible to a uint32_t");
+	static_assert(std::is_convertible<std::underlying_type<log_level>::type, uint_fast32_t>::value,
+		"custom log level type should be convertible to a uint_fast32_t");
 
 }
