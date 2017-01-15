@@ -19,11 +19,9 @@ namespace lograffe
 		class ostream_sink : public sink
 		{
 		public:
-			// takes ownership of the given stream
-			template<class T, typename std::enable_if<std::is_base_of<std::ostream, std::decay<T>::type>::value, int>::type = 0>
-			ostream_sink(T&& stream)
+			ostream_sink(std::ostream& stream)
 				: sink()
-				, m_stream(std::move(stream))
+				, stream_(stream)
 			{}
 
 			ostream_sink(const ostream_sink&) = delete;
@@ -33,16 +31,16 @@ namespace lograffe
 			ostream_sink operator = (ostream_sink&&) = delete;
 			
 		protected:
-			std::ostream m_stream;
+			std::ostream& stream_;
 
 			void push_line(const std::string& line)
 			{
-				m_stream << line;
+				stream_ << line;
 			}
 
 			void push_line(std::string&& line)
 			{
-				m_stream << line;
+				stream_ << line;
 			}
 		};
 
