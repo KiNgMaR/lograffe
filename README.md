@@ -13,10 +13,6 @@ Lograffe's focus is on being a really fast and reliable _structured_ logger. If 
 * default log level changeable at runtime
 * zero-overhead custom log levels
 
-## Status
-
-work-in-progress. Feedback very welcome!
-
 ## Examples
 
 ```c++
@@ -35,3 +31,14 @@ LOG(warn) << logr::fields{
         { "number", 122 }
     } << "The group's number increased " << "tremendously!";
 ```
+
+## Status / Roadmap
+
+<table>
+<tr><th>Target</th><th>Description</th><th>Status</th></tr>
+<tr><td>0.1</td><td>basic functionality, unit tested</td><td>work in progress</td></tr>
+<tr><td>0.1</td><td>performance testing + optimizations</td><td>to do</td></tr>
+<tr><td>0.5</td><td>support for nested fields</td><td>to do</td></tr>
+<tr><td>0.5</td><td>full documentation + examples</td><td>to do</td></tr>
+<tr><td>1.0</td><td>further changes based on user feedback</td><td>to do</td></tr>
+</table>
