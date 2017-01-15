@@ -126,6 +126,9 @@
     <ClInclude Include="..\include\lograffe\detail\log_entry_impl.hpp" />
     <ClInclude Include="..\include\lograffe\field.hpp" />
     <ClInclude Include="..\include\lograffe\fields.hpp" />
+    <ClInclude Include="..\include\lograffe\formatter.hpp" />
+    <ClInclude Include="..\include\lograffe\formatters\json_formatter.hpp" />
+    <ClInclude Include="..\include\lograffe\formatters\logfmt_formatter.hpp" />
     <ClInclude Include="..\include\lograffe\logger.hpp" />
     <ClInclude Include="..\include\lograffe\lograffe.hpp" />
     <ClInclude Include="..\include\lograffe\log_entry.hpp" />
@@ -136,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\tests\test_basics.cpp" />
+    <ClCompile Include="..\tests\test_logger.cpp" />
     <ClCompile Include="..\tests\test_main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

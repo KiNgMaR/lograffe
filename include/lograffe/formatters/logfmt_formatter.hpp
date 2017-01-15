@@ -22,6 +22,11 @@ namespace lograffe
 			logfmt_formatter()
 				: formatter()
 			{}
+
+			virtual std::string format_entry(const log_entry& entry) override
+			{
+				return "hi";
+			}
 		};
 
 	}

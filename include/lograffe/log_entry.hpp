@@ -66,6 +66,11 @@ namespace lograffe
 			return *this;
 		}
 
+		log_level level() const
+		{
+			return level_;
+		}
+
 		~log_entry();
 		
 	private:

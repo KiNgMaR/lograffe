@@ -8,6 +8,7 @@
 #pragma once
 
 #include <lograffe/sink.hpp>
+#include <lograffe/formatter.hpp>
 #include <iostream>
 
 namespace lograffe
@@ -19,8 +20,8 @@ namespace lograffe
 		class ostream_sink : public sink
 		{
 		public:
-			ostream_sink(std::ostream& stream)
-				: sink()
+			ostream_sink(log_level min_level, std::unique_ptr<formatter>&& fmter, std::ostream& stream)
+				: sink(min_level, std::move(fmter))
 				, stream_(stream)
 			{}
 
@@ -33,12 +34,12 @@ namespace lograffe
 		protected:
 			std::ostream& stream_;
 
-			void push_line(const std::string& line)
+			/*void push_line(const std::string& line) override
 			{
 				stream_ << line;
-			}
+			}*/
 
-			void push_line(std::string&& line)
+			void push_line(std::string&& line) override
 			{
 				stream_ << line;
 			}

@@ -25,12 +25,22 @@ namespace lograffe
 
 		// various convenience constructors for different types of values:
 
+		// Warning: the current implementation will likely be replaced by something
+		// more simple and equally performant.
+
 		template<class T>
 		field(T&& name, bool value) noexcept
 			: name_(std::forward<T>(name))
 			, value_(value ? "true" : "false")
 		{}
 		
+		// for characters (this is probably wrong in some cases):
+		template<class T>
+		field(T&& name, char value) noexcept
+			: name_(std::forward<T>(name))
+			, value_(1, value)
+		{}
+
 		// for integer numbers:
 		template<class TName, class TValue, typename std::enable_if<std::is_integral<TValue>::value, int>::type = 0>
 		field(TName&& name, TValue value) noexcept
@@ -38,14 +48,13 @@ namespace lograffe
 			, value_{ std::to_string(value) }
 		{}
 
+		// for double numbers:
 		template<class T>
 		field(T&& name, double value) noexcept
 			: name_(std::forward<T>(name))
 			, value_{ std::to_string(value) } // TODO: to be improved
 		{}
-
-		// TODO: nested fields
-
+		
 	private:
 		const std::string name_;
 		const std::string value_;

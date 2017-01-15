@@ -8,7 +8,9 @@
 #pragma once
 
 #include <lograffe/log_level.hpp>
+#include <lograffe/formatter.hpp>
 #include <string>
+#include <memory>
 
 namespace lograffe
 {
@@ -18,23 +20,17 @@ namespace lograffe
 	public:
 		sink(const sink&) = delete;
 		sink(sink&&) = default;
-		
-		void min_level(log_level level) noexcept
-		{
-			m_min_level = level;
-		}
 
 		log_level min_level() const noexcept
 		{
-			return m_min_level;
+			return min_level_;
 		}
 
-		template<class T>
-		void push(log_level level, T&& line)
+		void push(const log_entry& entry)
 		{
-			if (level >= m_min_level)
+			if (entry.level() >= min_level_)
 			{
-				push_line(std::forward<T>(line));
+				push_line(formatter_->format_entry(entry));
 			}
 		}
 
@@ -42,15 +38,17 @@ namespace lograffe
 		{}
 
 	protected:
-		sink()
-			: m_min_level()
+		sink(log_level min_level, std::unique_ptr<formatter>&& fmter)
+			: min_level_(min_level)
+			, formatter_(std::move(fmter))
 		{}
 
-		virtual void push_line(const std::string& line) = 0;
+		//virtual void push_line(const std::string& line) = 0;
 		virtual void push_line(std::string&& line) = 0;
 
 	private:
-		log_level m_min_level;
+		std::unique_ptr<formatter> formatter_;
+		log_level min_level_;
 	};
 
 }
