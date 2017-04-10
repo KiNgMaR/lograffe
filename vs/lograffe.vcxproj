@@ -139,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\tests\test_basics.cpp" />
+    <ClCompile Include="..\tests\test_field.cpp" />
     <ClCompile Include="..\tests\test_logger.cpp" />
     <ClCompile Include="..\tests\test_main.cpp" />
   </ItemGroup>

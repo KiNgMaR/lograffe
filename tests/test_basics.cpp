@@ -16,7 +16,7 @@ TEST_CASE("Logging with fields should work", "[basics]")
 {
 	lograffe::logger lgr;
 
-	lograffe::log_entry(lgr, lograffe::log_level::warn)
+	lograffe::log_entry(lgr, lograffe::log_level::warn, "warn")
 		<< logr::field("a", true)
 		<< logr::field{ "a2", 623932928349023423ull }
 		<< logr::fields{
@@ -28,13 +28,13 @@ TEST_CASE("Logging with fields should work", "[basics]")
 
 	logr::fields copy_me{ { "x", false }, { "y", 12.52 } };
 
-	lograffe::log_entry(lgr, lograffe::log_level::warn)
+	lograffe::log_entry(lgr, lograffe::log_level::warn, "warn")
 		<< copy_me;
 
-	lograffe::log_entry(lgr, lograffe::log_level::warn)
+	lograffe::log_entry(lgr, lograffe::log_level::warn, "warn")
 		<< copy_me;
 
-	lograffe::log_entry(lgr, lograffe::log_level::info)
+	lograffe::log_entry(lgr, lograffe::log_level::info, "info")
 		<< 5ul
 		<< std::string("test");
 
@@ -49,9 +49,10 @@ TEST_CASE("Logging to a stringstream should work", "[basics]")
 	//lgr.attach_sink(std::make_unique<lograffe::sinks::ostream_sink>(std::make_unique<lograffe::formatters::logfmt_formatter>(), ss));
 	lgr.attach_sink<lograffe::sinks::ostream_sink, lograffe::formatters::logfmt_formatter>(logr::log_level::warn, ss);
 
-	lograffe::log_entry(lgr, lograffe::log_level::warn)
+	lograffe::log_entry(lgr, lograffe::log_level::warn, "warn")
 		<< logr::field("a", true)
 		<< logr::field{ "a2", 623932928349023423ull }
+		<< logr::field("dangerous", "Very Dangerous \" string!")
 		<< logr::fields{
 			{ "b", false },
 			{ "c", 7 }

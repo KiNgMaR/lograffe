@@ -9,7 +9,7 @@
 
 #define LOG(LEVEL) \
 	if (lograffe::logger::current()->level_enabled(lograffe::log_level::LEVEL)) \
-		lograffe::detail::log_entry(lograffe::logger::current(), lograffe::log_level::LEVEL)
+		lograffe::detail::log_entry(lograffe::logger::current(), lograffe::log_level::LEVEL, #LEVEL)
 
 #define LOG_IF(BOOLEAN_EXPR, LEVEL) \
 	if (BOOLEAN_EXPR) LOG(LEVEL)

@@ -11,6 +11,8 @@
 #include <initializer_list>
 #include <vector>
 #include <iterator>
+#include <functional>
+#include <algorithm>
 
 namespace lograffe
 {
@@ -61,6 +63,11 @@ namespace lograffe
 			members_.reserve(members_.size() + other_fields.members_.size());
 
 			std::copy(other_fields.members_.begin(), other_fields.members_.end(), std::back_inserter(members_));
+		}
+
+		void for_each(std::function<void (const field&)> callback) const
+		{
+			std::for_each(members_.cbegin(), members_.cend(), callback);
 		}
 
 	private:
