@@ -1,5 +1,7 @@
 .vs
 *.VC.db
-Debug
-Release
+tmp
+out
 *.opendb
+*.user
+example.log

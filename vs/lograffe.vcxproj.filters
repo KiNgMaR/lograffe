@@ -60,6 +60,12 @@
     <ClInclude Include="..\include\lograffe\formatter.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\lograffe\formatters\detail\logfmt_encoding_impl.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\lograffe\detail\thread_local_static_instance.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\tests\test_main.cpp">
