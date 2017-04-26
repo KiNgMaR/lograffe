@@ -56,6 +56,8 @@ namespace lograffe
 	private:
 		uint_fast32_t enabled_levels_; // contains a bitmask of all levels that are enabled on at least one sink
 		std::vector<std::unique_ptr<sink>> sinks_;
+
+		void calculate_enabled_levels();
 	};
 
 }

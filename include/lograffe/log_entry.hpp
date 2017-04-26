@@ -10,7 +10,9 @@
 #include <lograffe/field.hpp>
 #include <lograffe/fields.hpp>
 #include <lograffe/log_level.hpp>
+#include <lograffe/log_entry_flags.hpp>
 #include <sstream>
+#include <chrono>
 
 namespace lograffe
 {
@@ -23,7 +25,10 @@ namespace lograffe
 			: logger_instance_(logger_instance)
 			, level_(level)
 			, level_name_(level_name)
+			, timestamp_{ std::chrono::system_clock::now() }
 			, entry_fields_{}
+			, message_()
+			, flags_()
 		{}
 
 		log_entry() = delete;
@@ -67,6 +72,11 @@ namespace lograffe
 			return *this;
 		}
 
+		log_entry& operator << (log_entry_flags bit)
+		{
+			flags_ = flags_ | bit;
+		}
+
 		log_level level() const
 		{
 			return level_;
@@ -75,6 +85,11 @@ namespace lograffe
 		const char* level_name() const
 		{
 			return level_name_;
+		}
+
+		const std::chrono::system_clock::time_point& timestamp_ref() const
+		{
+			return timestamp_;
 		}
 
 		const lograffe::fields& fields_ref() const
@@ -87,15 +102,22 @@ namespace lograffe
 			return message_;
 		}
 
+		bool has_flag(log_entry_flags bit) const
+		{
+			return (flags_ & bit) == bit;
+		}
+
 		~log_entry();
 		
 	private:
 		// keep a reference to a logger so we know where to send the complete entry
 		logger& logger_instance_;
-		log_level level_;
+		const log_level level_;
 		const char* level_name_;
+		const std::chrono::system_clock::time_point timestamp_;
 		lograffe::fields entry_fields_;
 		std::stringstream message_;
+		log_entry_flags flags_;
 	};
 
 }

@@ -55,5 +55,12 @@ int main(int, char **)
 
 	LOG(debug) << logr::field{ "line", __LINE__ };
 
+	giraffes.push_back("foogi");
+
+	LOG(warn) << logr::fields{
+		{ "omg", true },
+		{ "number", giraffes.size() * 100 }
+	} << "The group's number increased " << "tremendously!";
+
 	return 0;
 }

@@ -28,14 +28,7 @@ namespace lograffe
 
 		sinks_.emplace_back(std::move(new_sink));
 
-		uint_fast32_t new_levels{};
-
-		for (const auto& sink_ptr : sinks_)
-		{
-			new_levels = new_levels | static_cast<uint_fast32_t>(sink_ptr->min_level());
-		}
-
-		enabled_levels_ = new_levels;
+		calculate_enabled_levels();
 
 		return new_sink_handle;
 	}
@@ -44,12 +37,14 @@ namespace lograffe
 	{
 		// TODO: this is ugly
 
-		const auto comparison = [handle](const std::unique_ptr<sink>& element) -> bool
-			{ return std::hash<void*>()(element.get()) == handle; };
+		const auto comparison = [handle](const std::unique_ptr<sink>& sink_ptr) -> bool
+			{ return std::hash<void*>()(sink_ptr.get()) == handle; };
 
 		sinks_.erase(
 			std::remove_if(sinks_.begin(), sinks_.end(), comparison),
 			sinks_.end());
+		
+		calculate_enabled_levels();
 	}
 
 	inline void logger::log(const log_entry& entry) noexcept
@@ -58,6 +53,18 @@ namespace lograffe
 		{
 			sink_ptr->push(entry);
 		}
+	}
+
+	inline void logger::calculate_enabled_levels()
+	{
+		uint_fast32_t new_levels{};
+
+		for (const auto& sink_ptr : sinks_)
+		{
+			new_levels = new_levels | static_cast<uint_fast32_t>(sink_ptr->min_level());
+		}
+
+		enabled_levels_ = new_levels;
 	}
 
 }

@@ -17,6 +17,9 @@ namespace lograffe
 	namespace sinks
 	{
 
+		// This sink can be used to log to any std::ostream. The sink only keeps
+		// a reference to the actual ostream used, so you have to make sure that
+		// it does not go out of scope.
 		class ostream_sink : public sink
 		{
 		public:

@@ -141,6 +141,7 @@
     <ClInclude Include="..\include\lograffe\detail\logger_impl.hpp" />
     <ClInclude Include="..\include\lograffe\detail\log_entry_impl.hpp" />
     <ClInclude Include="..\include\lograffe\detail\thread_local_static_instance.hpp" />
+    <ClInclude Include="..\include\lograffe\detail\time_formatter.hpp" />
     <ClInclude Include="..\include\lograffe\field.hpp" />
     <ClInclude Include="..\include\lograffe\fields.hpp" />
     <ClInclude Include="..\include\lograffe\formatter.hpp" />
@@ -150,6 +151,8 @@
     <ClInclude Include="..\include\lograffe\logger.hpp" />
     <ClInclude Include="..\include\lograffe\lograffe.hpp" />
     <ClInclude Include="..\include\lograffe\log_entry.hpp" />
+    <ClInclude Include="..\include\lograffe\log_entry_flags.hpp" />
+    <ClInclude Include="..\include\lograffe\log_entry_bits.hpp\Header.h" />
     <ClInclude Include="..\include\lograffe\log_level.hpp" />
     <ClInclude Include="..\include\lograffe\macros.hpp" />
     <ClInclude Include="..\include\lograffe\sink.hpp" />
@@ -160,6 +163,7 @@
     <ClCompile Include="..\tests\test_field.cpp" />
     <ClCompile Include="..\tests\test_logger.cpp" />
     <ClCompile Include="..\tests\test_main.cpp" />
+    <ClCompile Include="..\tests\test_time_formatter.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
