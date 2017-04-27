@@ -66,13 +66,10 @@
     <ClInclude Include="..\include\lograffe\detail\thread_local_static_instance.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\lograffe\detail\time_formatter.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\lograffe\log_entry_bits.hpp\Header.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\lograffe\log_entry_flags.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\lograffe\detail\time_format.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -89,7 +86,7 @@
     <ClCompile Include="..\tests\test_field.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\tests\test_time_formatter.cpp">
+    <ClCompile Include="..\tests\test_time_format.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

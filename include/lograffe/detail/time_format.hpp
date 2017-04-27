@@ -18,7 +18,7 @@ namespace lograffe
 namespace detail
 {
 
-	class time_formatter
+	class time_format
 	{
 	public:
 		static std::string to_rfc3339(const std::chrono::system_clock::time_point& system_timestamp)
