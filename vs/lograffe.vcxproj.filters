@@ -69,7 +69,7 @@
     <ClInclude Include="..\include\lograffe\log_entry_flags.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\lograffe\detail\time_format.hpp">
+    <ClInclude Include="..\include\lograffe\formatters\detail\time_formatter_impl.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -87,6 +87,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\tests\test_time_format.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\test_logfmt_encoding.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
