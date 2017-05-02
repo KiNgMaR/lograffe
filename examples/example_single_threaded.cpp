@@ -18,6 +18,7 @@
 
 // the ostream_sink keeps a reference to this, so it must not go out of scope!
 std::ofstream output_file;
+// if you don't need this, you might want to go for a owning_ostream_sink<std::ofstream> instead.
 
 static void SetUpLogging()
 {
