@@ -24,6 +24,7 @@ namespace lograffe
 		// default constructed = no-op logger
 		logger()
 			: enabled_levels_()
+			, sinks_()
 		{}
 
 		// disallow copy construction and copy assignment

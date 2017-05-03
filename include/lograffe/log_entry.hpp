@@ -33,6 +33,10 @@ namespace lograffe
 
 		log_entry() = delete;
 
+		// for efficiency, we only want to std::move instances of this class.
+		log_entry(const log_entry&) = delete;
+		log_entry& operator = (const log_entry&) = delete;
+
 		log_entry& operator << (lograffe::fields&& new_fields)
 		{
 			entry_fields_.append(std::move(new_fields));
@@ -75,6 +79,8 @@ namespace lograffe
 		log_entry& operator << (log_entry_flags bit)
 		{
 			flags_ = flags_ | bit;
+
+			return *this;
 		}
 
 		log_level level() const
@@ -113,6 +119,8 @@ namespace lograffe
 		// keep a reference to a logger so we know where to send the complete entry
 		logger& logger_instance_;
 		const log_level level_;
+		// this is totally safe because it is expected to contain references to
+		// compile-time constants only:
 		const char* level_name_;
 		const std::chrono::system_clock::time_point timestamp_;
 		lograffe::fields entry_fields_;

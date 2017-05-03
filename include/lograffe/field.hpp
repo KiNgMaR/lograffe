@@ -85,8 +85,8 @@ namespace lograffe
 
 	private:
 		const std::string name_;
-		const std::string value_;
 		const value_type value_type_;
+		const std::string value_;
 	};
 
 }

@@ -47,8 +47,8 @@ namespace lograffe
 		virtual void push_line(std::string&& line) = 0;
 
 	private:
-		std::unique_ptr<formatter> formatter_;
 		log_level min_level_;
+		std::unique_ptr<formatter> formatter_;
 	};
 
 }

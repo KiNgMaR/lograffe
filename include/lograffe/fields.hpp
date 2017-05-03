@@ -24,7 +24,10 @@ namespace lograffe
 			: members_(members)
 		{}
 
-		fields() = default;
+		fields()
+			: members_()
+		{}
+
 		fields(const fields&) = default;
 		fields(fields&&) = default;
 
