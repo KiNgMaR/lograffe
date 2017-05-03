@@ -32,13 +32,12 @@ namespace detail
 				system_timestamp.time_since_epoch()).count() % 1000;
 
 			std::stringstream ss;
+			std::tm tm;
 
 #ifdef _WIN32
-			std::tm tm;
 			gmtime_s(&tm, &unix_timestamp);
 #else
-			std::tm tm;
-			localtime_r(&unix_timestamp, &tm);
+			gmtime_r(&unix_timestamp, &tm);
 #endif
 
 			ss << (tm.tm_year + 1900) << '-';
@@ -50,13 +49,12 @@ namespace detail
 			pad2(ss, tm.tm_sec) << '.';
 			pad3(ss, millis);
 
-#ifdef _WIN32
 			ss << 'Z';
-#else
-			ss << (tm.__tm_gmtoff < 0 ? '-' : '+');
-			// TODO: this is super unportable
-			pad2(ss, tm.__tm_gmtoff / 3600) << ':';
-			pad2(ss, tm.__tm_gmtoff % 3600);
+#if 0
+			int offset = gmtoff(tm.tm_isdst);
+			ss << (offset < 0 ? '-' : '+');
+			pad2(ss, abs(offset / 60)) << ':';
+			pad2(ss, abs(offset % 60));
 #endif
 			return ss.str();
 		}
