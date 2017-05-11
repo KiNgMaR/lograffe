@@ -7,25 +7,27 @@
 
 #pragma once
 
-#include <lograffe/log_entry.hpp>
 #include <string>
 
 namespace lograffe
 {
 
-	class formatter
+	//
+	// Common base class for writer implementations.
+	//
+	class writer
 	{
 	public:
-		formatter(const formatter&) = delete;
-		formatter(formatter&&) = default;
+		writer(const writer&) = delete;
+		writer(writer&&) = default;
 
-		virtual std::string format_entry(const log_entry&) = 0;
+		virtual void write_line(const std::string&) = 0;
 
-		virtual ~formatter()
+		virtual ~writer()
 		{}
 
 	protected:
-		formatter() = default;
+		writer() = default;
 	};
 
 }

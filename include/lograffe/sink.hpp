@@ -8,47 +8,42 @@
 #pragma once
 
 #include <lograffe/log_level.hpp>
-#include <lograffe/formatter.hpp>
-#include <string>
-#include <memory>
+#include <lograffe/log_entry.hpp>
 
 namespace lograffe
 {
 
+	//
+	// Common base class for sink implementations.
+	//
 	class sink
 	{
 	public:
 		sink(const sink&) = delete;
 		sink(sink&&) = default;
 
+		bool level_enabled(log_level level) const noexcept
+		{
+			return (level >= min_level_);
+		}
+
 		log_level min_level() const noexcept
 		{
 			return min_level_;
 		}
 
-		void push(const log_entry& entry)
-		{
-			if (entry.level() >= min_level_)
-			{
-				push_line(formatter_->format_entry(entry));
-			}
-		}
+		virtual void push(const log_entry& entry) = 0;
 
 		virtual ~sink()
 		{}
 
 	protected:
-		sink(log_level min_level, std::unique_ptr<formatter>&& fmter)
+		sink(log_level min_level)
 			: min_level_(min_level)
-			, formatter_(std::move(fmter))
 		{}
-
-		//virtual void push_line(const std::string& line) = 0;
-		virtual void push_line(std::string&& line) = 0;
 
 	private:
 		log_level min_level_;
-		std::unique_ptr<formatter> formatter_;
 	};
 
 }

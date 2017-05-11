@@ -14,15 +14,15 @@ namespace lograffe
 {
 
 #ifndef LOGRAFFE_CUSTOM_LEVELS
-	
+
 	// lograffe default log levels, from debug to fatal.
 	enum class log_level : uint_fast32_t
 	{
-		debug = (1 << 1),
-		info  = (1 << 2),
-		warn  = (1 << 3),
-		error = (1 << 4),
-		fatal = (1 << 5),
+		debug = (1 << 0),
+		info  = (1 << 1),
+		warn  = (1 << 2),
+		error = (1 << 3),
+		fatal = (1 << 4),
 	};
 
 #else

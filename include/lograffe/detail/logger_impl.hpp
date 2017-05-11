@@ -17,7 +17,7 @@ namespace lograffe
 		return static_cast<uint_fast32_t>(level) >= enabled_levels_;
 	}
 
-	inline logger::attached_sink_handle logger::attach_sink(std::unique_ptr<sink>&& new_sink)
+	inline logger::attached_sink_handle logger::attach_sink(const std::shared_ptr<sink>& new_sink)
 	{
 		if (!new_sink)
 		{
@@ -37,7 +37,7 @@ namespace lograffe
 	{
 		// TODO: this is ugly
 
-		const auto comparison = [handle](const std::unique_ptr<sink>& sink_ptr) -> bool
+		const auto comparison = [handle](const auto& sink_ptr) -> bool
 			{ return std::hash<void*>()(sink_ptr.get()) == handle; };
 
 		sinks_.erase(
@@ -47,7 +47,7 @@ namespace lograffe
 		calculate_enabled_levels();
 	}
 
-	inline void logger::log(const log_entry& entry) noexcept
+	inline void logger::log(const log_entry& entry)
 	{
 		for (auto& sink_ptr : sinks_)
 		{

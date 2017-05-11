@@ -14,8 +14,9 @@ namespace lograffe
 
 	enum class log_entry_flags : uint_fast32_t
 	{
-		flush = (1 << 1),
-		// stuff = (1 << 2),
+		flush = (1 << 0),
+		sync  = (1 << 1),
+		// stuff = (1 << 3),
 	};
 
 	inline constexpr log_entry_flags operator | (log_entry_flags a, log_entry_flags b)

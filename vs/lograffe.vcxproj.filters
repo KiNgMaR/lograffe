@@ -45,9 +45,6 @@
     <ClInclude Include="..\include\lograffe\detail\logger_impl.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\lograffe\sinks\ostream_sink.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\lograffe\sink.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

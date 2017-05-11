@@ -47,8 +47,6 @@ namespace formatters
 				detail::logfmt_encoding::encode_value(ss, field.value_ref());
 			});
 
-			ss << std::endl;
-
 			return ss.str();
 		}
 	};

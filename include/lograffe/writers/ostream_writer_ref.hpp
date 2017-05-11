@@ -7,25 +7,31 @@
 
 #pragma once
 
-#include <lograffe/log_entry.hpp>
+#include <lograffe/writer.hpp>
 #include <string>
 
 namespace lograffe
 {
 
-	class formatter
+namespace writers
+{
+
+	class ostream_writer_ref : public writer
 	{
 	public:
-		formatter(const formatter&) = delete;
-		formatter(formatter&&) = default;
-
-		virtual std::string format_entry(const log_entry&) = 0;
-
-		virtual ~formatter()
+		ostream_writer_ref(std::ostream& stream)
+			: stream_(stream)
 		{}
 
+		void write_line(const std::string& line) override
+		{
+			stream_ << line << std::endl;
+		}
+
 	protected:
-		formatter() = default;
+		std::ostream& stream_;
 	};
+
+}
 
 }

@@ -13,6 +13,7 @@
 #include <lograffe/formatter.hpp>
 #include <lograffe/detail/thread_local_static_instance.hpp>
 #include <vector>
+#include <memory>
 #include <functional>
 
 namespace lograffe
@@ -36,9 +37,10 @@ namespace lograffe
 	public:
 		typedef std::hash<void*>::result_type attached_sink_handle;
 
-		attached_sink_handle attach_sink(std::unique_ptr<sink>&& new_sink);
+		attached_sink_handle attach_sink(const std::shared_ptr<sink>& new_sink);
 
 		// to allow inline construction of sinks:
+#if 0
 		template<class TSink, class TFormatter, class... TSinkArgs>
 		attached_sink_handle attach_sink(log_level min_level, TSinkArgs&&... args)
 		{
@@ -47,16 +49,17 @@ namespace lograffe
 
 			return attach_sink(std::make_unique<TSink>(min_level, std::make_unique<TFormatter>(), std::forward<TSinkArgs>(args)...));
 		}
+#endif
 
 		void detach_sink(attached_sink_handle handle);
 
 	public:
 		bool level_enabled(log_level level) const;
-		void log(const log_entry& entry) noexcept;
+		void log(const log_entry& entry);
 
 	private:
 		uint_fast32_t enabled_levels_; // contains a bitmask of all levels that are enabled on at least one sink
-		std::vector<std::unique_ptr<sink>> sinks_;
+		std::vector<std::shared_ptr<sink>> sinks_;
 
 		void calculate_enabled_levels();
 	};

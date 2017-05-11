@@ -8,17 +8,19 @@
 // lograffe
 #include <lograffe/lograffe.hpp>
 #include <lograffe/alias.hpp> // alias lograffe namespace as logr
-#include <lograffe/sinks/ostream_sink.hpp>
+#include <lograffe/sinks/direct_sink.hpp>
+#include <lograffe/writers/ostream_writer_ref.hpp>
 #include <lograffe/formatters/logfmt_formatter.hpp>
+#include <lograffe/noop_mutex.hpp>
 
 // stdlib
 #include <string>
 #include <vector>
 #include <fstream>
 
-// the ostream_sink keeps a reference to this, so it must not go out of scope!
+// the ostream_writer_ref keeps a reference to this, so it must not go out of scope!
 std::ofstream output_file;
-// if you don't need this, you might want to go for a owning_ostream_sink<std::ofstream> instead.
+// if you don't need this, you might want to go for a ostream_writer_owning<std::ofstream> instead.
 
 static void SetUpLogging()
 {
@@ -33,7 +35,8 @@ static void SetUpLogging()
 	// - to a file ostream
 	// - using the logfmt formatter.
 
-	my_logger.attach_sink<sinks::ostream_sink, formatters::logfmt_formatter>(log_level::info, output_file);
+	my_logger.attach_sink(std::make_shared<sinks::direct_sink<formatters::logfmt_formatter, writers::ostream_writer_ref, noop_mutex>>(
+		log_level::info, formatters::logfmt_formatter(), writers::ostream_writer_ref(output_file)));
 
 	// pass ownership to static/thread local logger management:
 	logger::set_current(std::move(my_logger));
