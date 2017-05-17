@@ -35,8 +35,8 @@ static void SetUpLogging()
 	// - to a file ostream
 	// - using the logfmt formatter.
 
-	my_logger.attach_sink(std::make_shared<sinks::direct_sink<formatters::logfmt_formatter, writers::ostream_writer_ref, noop_mutex>>(
-		log_level::info, formatters::logfmt_formatter(), writers::ostream_writer_ref(output_file)));
+	my_logger.attach_sink(std::make_shared<sinks::direct_sink<writers::ostream_writer_ref, formatters::logfmt_formatter, noop_mutex>>(
+		log_level::info, writers::ostream_writer_ref(output_file)));
 
 	// pass ownership to static/thread local logger management:
 	logger::set_current(std::move(my_logger));

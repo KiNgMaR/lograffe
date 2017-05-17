@@ -19,17 +19,17 @@ namespace lograffe
 
 	// This class implements a sink that flushes log entries to the writer in batches
 	// or on request (using the log_entry_flags::flush bit).
-	template<class Formatter, class Writer, class Mutex = std::mutex>
+	template<class Writer, class Formatter, class Mutex = std::mutex>
 	class buffered_sink : public sink
 	{
 	public:
+		static_assert(std::is_base_of<writer, Writer>::value, "Writer must be derived from writer."); 
 		static_assert(std::is_base_of<formatter, Formatter>::value, "Formatter must be derived from formatter.");
-		static_assert(std::is_base_of<writer, Writer>::value, "Writer must be derived from writer.");
 
-		buffered_sink(log_level min_level, Formatter&& formatter, Writer&& writer, size_t max_buffer_length = 10u)
+		buffered_sink(log_level min_level, Writer&& writer, Formatter&& formatter = Formatter(), size_t max_buffer_length = 10u)
 			: sink(min_level)
-			, formatter_(std::move(formatter))
 			, writer_(std::move(writer))
+			, formatter_(std::move(formatter))
 			, mutex_()
 			, buffer_()
 			, max_buffer_length_(max_buffer_length)
@@ -59,8 +59,8 @@ namespace lograffe
 		}
 
 	private:
-		Formatter formatter_;
 		Writer writer_;
+		Formatter formatter_;
 		Mutex mutex_;
 		std::queue<log_entry> buffer_;
 		size_t max_buffer_length_;

@@ -21,17 +21,17 @@ namespace sinks
 
 	// This class implements a sink that doesn't add any functionality,
 	// it simply passes entries synchronously through Formatter and Writer.
-	template<class Formatter, class Writer, class Mutex = std::mutex>
+	template<class Writer, class Formatter, class Mutex = std::mutex>
 	class direct_sink : public sink
 	{
 	public:
+		static_assert(std::is_base_of<writer, Writer>::value, "Writer must be derived from writer."); 
 		static_assert(std::is_base_of<formatter, Formatter>::value, "Formatter must be derived from formatter.");
-		static_assert(std::is_base_of<writer, Writer>::value, "Writer must be derived from writer.");
 
-		direct_sink(log_level min_level, Formatter&& formatter, Writer&& writer)
+		direct_sink(log_level min_level, Writer&& writer, Formatter&& formatter = Formatter())
 			: sink(min_level)
-			, formatter_(std::move(formatter))
 			, writer_(std::move(writer))
+			, formatter_(std::move(formatter))
 			, mutex_()
 		{}
 
@@ -43,8 +43,8 @@ namespace sinks
 		}
 
 	private:
-		Formatter formatter_;
 		Writer writer_;
+		Formatter formatter_;
 		Mutex mutex_;
 	};
 
