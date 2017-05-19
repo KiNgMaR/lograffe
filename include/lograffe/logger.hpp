@@ -24,9 +24,15 @@ namespace lograffe
 	public:
 		// default constructed = no-op logger
 		logger()
-			: enabled_levels_()
+			: enabled_levels_() // TODO: fix default level and/or level_enabled
 			, sinks_()
 		{}
+
+		// provided by parent class:
+		// static logger& current();
+		// static void set_current(logger&&);
+		// static void reset_current();
+		// static void set_global_default_creation_method(std::function<std::unique_ptr<logger> ()>);
 
 		// disallow copy construction and copy assignment
 		logger(const logger&) = delete;
@@ -38,19 +44,6 @@ namespace lograffe
 		typedef std::hash<void*>::result_type attached_sink_handle;
 
 		attached_sink_handle attach_sink(const std::shared_ptr<sink>& new_sink);
-
-		// to allow inline construction of sinks:
-#if 0
-		template<class TSink, class TFormatter, class... TSinkArgs>
-		attached_sink_handle attach_sink(log_level min_level, TSinkArgs&&... args)
-		{
-			static_assert(std::is_base_of<sink, TSink>::value, "expecting type derived from lograffe::sink");
-			static_assert(std::is_base_of<formatter, TFormatter>::value, "expecting type derived from lograffe::formatter");
-
-			return attach_sink(std::make_unique<TSink>(min_level, std::make_unique<TFormatter>(), std::forward<TSinkArgs>(args)...));
-		}
-#endif
-
 		void detach_sink(attached_sink_handle handle);
 
 	public:

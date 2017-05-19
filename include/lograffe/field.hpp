@@ -55,6 +55,13 @@ namespace lograffe
 			, value_(value)
 		{}
 
+		template<class T>
+		field(T&& name, const std::string& value) noexcept
+			: name_(std::forward<T>(name))
+			, value_type_(value_type::STRING)
+			, value_(value)
+		{}
+
 		// for characters (this is probably wrong in some cases):
 		template<class T>
 		field(T&& name, char value) noexcept
