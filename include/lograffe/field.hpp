@@ -8,6 +8,7 @@
 #pragma once
 
 #include <string>
+#include <sstream>
 
 namespace lograffe
 {
@@ -78,6 +79,14 @@ namespace lograffe
 			, value_{ std::to_string(value) }
 		{}
 
+		// for pointers:
+		template<class TName, class TValue, typename std::enable_if<std::is_pointer<TValue>::value, int>::type = 0>
+		field(TName&& name, TValue value) noexcept
+			: name_(std::forward<TName>(name))
+			, value_type_(value_type::STRING)
+			, value_(my_to_string(reinterpret_cast<const void*>(value)))
+		{}
+
 		// for double numbers:
 		template<class T>
 		field(T&& name, double value) noexcept
@@ -94,6 +103,13 @@ namespace lograffe
 		const std::string name_;
 		const value_type value_type_;
 		const std::string value_;
+
+		static std::string my_to_string(const void* ptr)
+		{
+			std::stringstream ss;
+			ss << ptr;
+			return ss.str();
+		}
 	};
 
 }
