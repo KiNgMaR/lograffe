@@ -32,7 +32,7 @@ namespace detail
 
 			encode_key(ss, key);
 			ss << '=';
-			encode_value(ss, key);
+			encode_value(ss, value);
 		}
 
 		static inline void encode_key(std::stringstream& ss, const std::string& key)
