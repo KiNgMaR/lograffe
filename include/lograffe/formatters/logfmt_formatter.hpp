@@ -37,7 +37,7 @@ namespace formatters
 
 			if (entry.message_ref().rdbuf()->in_avail() != 0)
 			{
-				detail::logfmt_encoding::encode_pair(ss, field_name_level_, entry.message_ref().str());
+				detail::logfmt_encoding::encode_pair(ss, field_name_message_, entry.message_ref().str());
 			}
 
 			entry.fields_ref().for_each([&ss](const field& field)
