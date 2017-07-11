@@ -44,6 +44,13 @@ namespace lograffe
 		typedef std::hash<void*>::result_type attached_sink_handle;
 
 		attached_sink_handle attach_sink(const std::shared_ptr<sink>& new_sink);
+
+		template<class T, typename ...Args>
+		attached_sink_handle attach_sink(Args&&... args)
+		{
+			return attach_sink(std::make_shared<T>(std::forward<Args>(args)...));
+		}
+
 		void detach_sink(attached_sink_handle handle);
 
 	public:

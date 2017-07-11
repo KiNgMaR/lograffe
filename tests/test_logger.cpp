@@ -7,14 +7,14 @@
 
 #include "catch.hpp"
 #include <lograffe/lograffe.hpp>
-#include <lograffe/formatters/logfmt_formatter.hpp>
+#include <lograffe/sinks/null_sink.hpp>
 
 TEST_CASE("Higher log levels should include/enable lower ones", "[logger]")
 {
 	std::stringstream dummy;
 
 	lograffe::logger lgr;
-	//lgr.attach_sink<lograffe::sinks::ostream_sink, lograffe::formatters::logfmt_formatter>(lograffe::log_level::warn, dummy);
+	lgr.attach_sink<lograffe::sinks::null_sink>(lograffe::log_level::warn);
 
 	REQUIRE(lgr.level_enabled(lograffe::log_level::warn));
 	REQUIRE(lgr.level_enabled(lograffe::log_level::error));

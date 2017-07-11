@@ -28,26 +28,26 @@ namespace detail
 			{
 				return *current_thread_instance_;
 			}
-			else if (default_logger_creation_)
+			else if (default_instance_creation_)
 			{
-				current_thread_instance_ = std::move(default_logger_creation_());
+				current_thread_instance_ = default_instance_creation_();
 
 				return *current_thread_instance_;
 			}
 			else
 			{
-				static T default_constructed_logger;
+				static T default_constructed_instance;
 				// There's a catch here. Normally a logger can assume to be accessed from
 				// only one thread at a time. However, with this static default constructed
 				// thing, this assumption breaks!
 
-				return default_constructed_logger;
+				return default_constructed_instance;
 			}
 		}
 
 		static void set_current(T&& new_instance) noexcept
 		{
-			current_thread_instance_.reset(std::move(new_instance));
+			current_thread_instance_.reset(new T(std::move(new_instance)));
 		}
 
 		static void reset_current() noexcept
@@ -57,19 +57,19 @@ namespace detail
 
 		static void set_global_default_creation_method(const std::function<std::unique_ptr<T> ()>& functor)
 		{
-			default_logger_creation_ = functor;
+			default_instance_creation_ = functor;
 		}
 
 	private:
 		static thread_local std::unique_ptr<T> current_thread_instance_;
-		static std::function<std::unique_ptr<T> ()> default_logger_creation_;
+		static std::function<std::unique_ptr<T> ()> default_instance_creation_;
 	};
 
 	template<typename T>
 	/*static*/ thread_local std::unique_ptr<T> thread_local_static_instance<T>::current_thread_instance_;
 
 	template<typename T>
-	/*static*/ std::function<std::unique_ptr<T> ()> thread_local_static_instance<T>::default_logger_creation_;
+	/*static*/ std::function<std::unique_ptr<T> ()> thread_local_static_instance<T>::default_instance_creation_;
 
 }
 

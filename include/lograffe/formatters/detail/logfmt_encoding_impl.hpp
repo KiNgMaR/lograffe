@@ -23,6 +23,18 @@ namespace detail
 	class logfmt_encoding
 	{
 	public:
+		static inline void encode_pair(std::stringstream& ss, const std::string& key, const std::string& value, bool space = true)
+		{
+			if (space)
+			{
+				ss << ' ';
+			}
+
+			encode_key(ss, key);
+			ss << '=';
+			encode_value(ss, key);
+		}
+
 		static inline void encode_key(std::stringstream& ss, const std::string& key)
 		{
 			if (key.empty() || contains_blacklisted_character(key))
@@ -49,21 +61,33 @@ namespace detail
 			for (const char c : value)
 			{
 				if (c == '\n')
+				{
 					ss << "\\n";
+				}
 				else if (c == '\r')
+				{
 					ss << "\\r";
+				}
 				else if (c == '\t')
+				{
 					ss << "\\t";
+				}
 				else if (c < 0x20)
 				{
+					// This is not part of the logfmt standard. We use it to avoid dealing with
+					// (valid or invalid) UTF-8 for now.
 					ss << "\\x";
 					ss << HEXALPHA[static_cast<unsigned char>(c) >> 4];
 					ss << HEXALPHA[static_cast<unsigned char>(c) & 15];
 				}
 				else if (c == '\\' || c == '"')
+				{
 					ss << '\\' << c;
+				}
 				else
+				{
 					ss << c;
+				}
 			}
 
 			ss << '"';
@@ -72,11 +96,12 @@ namespace detail
 	private:
 		static inline bool contains_blacklisted_character(const std::string& str)
 		{
-			// stupid stuff because searching for \x00 with find_first_of requires an std::string instance.
 			for (const char c : str)
 			{
 				if (c <= 0x20 || c == '"' || c == '=')
+				{
 					return true;
+				}
 			}
 
 			return false;
