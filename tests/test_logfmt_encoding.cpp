@@ -14,6 +14,9 @@ using namespace lograffe::formatters::detail;
 #define REQUIRE_INOUT_STR(call, in, expected_out) \
 	{ std::stringstream ss; logfmt_encoding::call(ss, in); REQUIRE(ss.str() == std::string(expected_out)); }
 
+#define REQUIRE_INOUT_PAIR(key, value, expected_out) \
+	{ std::stringstream ss; logfmt_encoding::encode_pair(ss, key, value, true); REQUIRE(ss.str() == std::string(expected_out)); }
+
 TEST_CASE("Invalid keys should be replaced", "[logfmt_encoding]")
 {
 	REQUIRE_INOUT_STR(encode_key, "", "(invalid_key)");
@@ -38,4 +41,10 @@ TEST_CASE("Values should be quoted when necessary", "[logfmt_encoding]")
 	REQUIRE_INOUT_STR(encode_value, "2008-09-08T22:47:31+07:00", "2008-09-08T22:47:31+07:00");
 	REQUIRE_INOUT_STR(encode_value, "with\rnew\nline", "\"with\\rnew\\nline\"");
 	REQUIRE_INOUT_STR(encode_value, "with\x03""strange\x1F""characters", "\"with\\x03strange\\x1Fcharacters\"");
+}
+
+TEST_CASE("Helper method for pairs should work as expected", "[logfmt_encoding]")
+{
+	REQUIRE_INOUT_PAIR("my key", "my value", " (invalid_key)=\"my value\"");
+	REQUIRE_INOUT_PAIR("my_key", "coolVal", " my_key=coolVal");
 }
