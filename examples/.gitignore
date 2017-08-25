@@ -2,3 +2,4 @@
 *.o
 example_single_threaded
 example_multi_threaded
+*.log
