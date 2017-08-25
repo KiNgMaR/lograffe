@@ -7,8 +7,10 @@
 
 #pragma once
 
+#include <lograffe/formatters/detail/utf8_dfa.hpp>
 #include <string>
 #include <sstream>
+#include <iomanip>
 
 namespace lograffe
 {
@@ -56,41 +58,72 @@ namespace detail
 				return;
 			}
 
-			ss << '"';
-
-			for (const char c : value)
-			{
-				if (c == '\n')
-				{
-					ss << "\\n";
-				}
-				else if (c == '\r')
-				{
-					ss << "\\r";
-				}
-				else if (c == '\t')
-				{
-					ss << "\\t";
-				}
-				else if (c < 0x20)
-				{
-					// This is not part of the logfmt standard. We use it to avoid dealing with
-					// (valid or invalid) UTF-8 for now.
-					ss << "\\x";
-					ss << HEXALPHA[static_cast<unsigned char>(c) >> 4];
-					ss << HEXALPHA[static_cast<unsigned char>(c) & 15];
-				}
-				else if (c == '\\' || c == '"')
-				{
-					ss << '\\' << c;
-				}
-				else
-				{
-					ss << c;
-				}
-			}
+            // remember stream flags to restore them later:
+            std::ios ss_state(nullptr);
+            ss_state.copyfmt(ss);
 
 			ss << '"';
+            ss << std::hex << std::setfill('0');
+
+            // do the UTF-8 dance:
+            auto prev = utf8_dfa::UTF8_ACCEPT;
+            auto current = utf8_dfa::UTF8_ACCEPT;
+
+            uint32_t codepoint = 0;
+
+            for (size_t p = 0, length = value.length(); p < length; ++p)
+            {
+                prev = current;
+
+                switch (utf8_dfa::decode(&current, &codepoint, static_cast<unsigned char>(value[p])))
+                {
+                case utf8_dfa::UTF8_ACCEPT:
+                    // A properly encoded character has been found.
+                    if (codepoint == '\n')
+                    {
+                        ss << "\\n";
+                    }
+                    else if (codepoint == '\r')
+                    {
+                        ss << "\\r";
+                    }
+                    else if (codepoint == '\t')
+                    {
+                        ss << "\\t";
+                    }
+                    else if (codepoint == '\\' || codepoint  == '"')
+                    {
+                        ss << '\\' << static_cast<char>(codepoint);
+                    }
+                    else if (codepoint >= 0x20 && codepoint < 0x80)
+                    {
+                        ss << static_cast<char>(codepoint);
+                    }
+                    else
+                    {
+                        ss << "\\u" << std::setw(4) << codepoint;
+                    }
+                    break;
+
+                case utf8_dfa::UTF8_REJECT:
+                    // The byte is invalid, replace it and restart.
+                    ss << "\\ufffd";
+
+                    current = utf8_dfa::UTF8_ACCEPT;
+
+                    if (prev != utf8_dfa::UTF8_ACCEPT)
+                    {
+                        --p;
+                    }
+                    break;
+                }
+            }
+
+            // TODO: check final state
+
+			ss << '"';
+
+            ss.copyfmt(ss_state);
 		}
 
 	private:

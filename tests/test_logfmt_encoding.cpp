@@ -40,7 +40,14 @@ TEST_CASE("Values should be quoted when necessary", "[logfmt_encoding]")
 	REQUIRE_INOUT_STR(encode_value, "\\\"", "\"" "\\" "\\" "\\" "\"\"");
 	REQUIRE_INOUT_STR(encode_value, "2008-09-08T22:47:31+07:00", "2008-09-08T22:47:31+07:00");
 	REQUIRE_INOUT_STR(encode_value, "with\rnew\nline", "\"with\\rnew\\nline\"");
-	REQUIRE_INOUT_STR(encode_value, "with\x03""strange\x1F""characters", "\"with\\x03strange\\x1Fcharacters\"");
+	REQUIRE_INOUT_STR(encode_value, "with\x03""strange\x1F""characters", "\"with\\u0003strange\\u001fcharacters\"");
+}
+
+TEST_CASE("UTF-8 handling should be in place", "[logfmt_encoding]")
+{
+    REQUIRE_INOUT_STR(encode_value, "V\xc3\xa4lid UTF-8", "\"V\\u00e4lid UTF-8\"");
+    REQUIRE_INOUT_STR(encode_value, "\xd0\xaf", "\"\\u042f\"");
+    REQUIRE_INOUT_STR(encode_value, "Invalid \xDCTF-8", "\"Invalid \\ufffdTF-8\"");
 }
 
 TEST_CASE("Helper method for pairs should work as expected", "[logfmt_encoding]")
