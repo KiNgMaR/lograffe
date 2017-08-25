@@ -37,9 +37,11 @@ namespace sinks
 
 		void push(const log_entry& entry) override
 		{
+            const auto& formatted = formatter_.format_entry(entry);
+
 			std::lock_guard<Mutex> lock(mutex_);
 
-			writer_.write_line(formatter_.format_entry(entry));
+			writer_.write_line(formatted);
 		}
 
 	private:
