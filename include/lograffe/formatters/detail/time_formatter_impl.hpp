@@ -11,6 +11,7 @@
 #include <ctime>
 #include <string>
 #include <sstream>
+#include <cstdint>
 
 namespace lograffe
 {
@@ -28,7 +29,7 @@ namespace detail
 		{
 			std::time_t unix_timestamp{ std::chrono::system_clock::to_time_t(system_timestamp) };
 
-			unsigned int millis = std::chrono::duration_cast<std::chrono::milliseconds>(
+			auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(
 				system_timestamp.time_since_epoch()).count() % 1000;
 
 			std::stringstream ss;
@@ -65,7 +66,7 @@ namespace detail
 		}*/
 
 	private:
-		static std::stringstream& pad2(std::stringstream& ss, unsigned int n)
+		static std::stringstream& pad2(std::stringstream& ss, uint64_t n)
 		{
 			if (n < 10)
 				ss << '0';
@@ -73,7 +74,7 @@ namespace detail
 			return ss;
 		}
 
-		static std::stringstream& pad3(std::stringstream& ss, unsigned int n)
+		static std::stringstream& pad3(std::stringstream& ss, uint64_t n)
 		{
 			if (n < 10)
 				ss << '0';
