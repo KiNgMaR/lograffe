@@ -18,6 +18,44 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\lograffe\alias.hpp" />
+    <ClInclude Include="..\include\lograffe\detail\logger_impl.hpp" />
+    <ClInclude Include="..\include\lograffe\detail\log_entry_impl.hpp" />
+    <ClInclude Include="..\include\lograffe\detail\thread_local_static_instance.hpp" />
+    <ClInclude Include="..\include\lograffe\field.hpp" />
+    <ClInclude Include="..\include\lograffe\fields.hpp" />
+    <ClInclude Include="..\include\lograffe\formatter.hpp" />
+    <ClInclude Include="..\include\lograffe\formatters\detail\json_encoding_impl.hpp" />
+    <ClInclude Include="..\include\lograffe\formatters\detail\logfmt_encoding_impl.hpp" />
+    <ClInclude Include="..\include\lograffe\formatters\detail\time_formatter_impl.hpp" />
+    <ClInclude Include="..\include\lograffe\formatters\detail\utf8_dfa.hpp" />
+    <ClInclude Include="..\include\lograffe\formatters\json_formatter.hpp" />
+    <ClInclude Include="..\include\lograffe\formatters\logfmt_formatter.hpp" />
+    <ClInclude Include="..\include\lograffe\logger.hpp" />
+    <ClInclude Include="..\include\lograffe\lograffe.hpp" />
+    <ClInclude Include="..\include\lograffe\log_entry.hpp" />
+    <ClInclude Include="..\include\lograffe\log_entry_flags.hpp" />
+    <ClInclude Include="..\include\lograffe\log_level.hpp" />
+    <ClInclude Include="..\include\lograffe\macros.hpp" />
+    <ClInclude Include="..\include\lograffe\noop_mutex.hpp" />
+    <ClInclude Include="..\include\lograffe\sink.hpp" />
+    <ClInclude Include="..\include\lograffe\sinks\async_sink.hpp" />
+    <ClInclude Include="..\include\lograffe\sinks\buffered_sink.hpp" />
+    <ClInclude Include="..\include\lograffe\sinks\direct_sink.hpp" />
+    <ClInclude Include="..\include\lograffe\sinks\null_sink.hpp" />
+    <ClInclude Include="..\include\lograffe\writer.hpp" />
+    <ClInclude Include="..\include\lograffe\writers\ostream_writer_owning.hpp" />
+    <ClInclude Include="..\include\lograffe\writers\ostream_writer_ref.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\tests\test_basics.cpp" />
+    <ClCompile Include="..\tests\test_field.cpp" />
+    <ClCompile Include="..\tests\test_logfmt_encoding.cpp" />
+    <ClCompile Include="..\tests\test_logger.cpp" />
+    <ClCompile Include="..\tests\test_main.cpp" />
+    <ClCompile Include="..\tests\test_time_format.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3EBA40A2-5470-422F-A066-8A1F97EE292D}</ProjectGuid>
     <RootNamespace>lograffe</RootNamespace>
@@ -136,12 +174,6 @@
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="..\include\lograffe\**\*.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\tests\*.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
