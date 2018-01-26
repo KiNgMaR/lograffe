@@ -6,7 +6,7 @@
 //
 
 #include "catch.hpp"
-#include <lograffe/formatters/detail/time_formatter_impl.hpp>
+#include <lograffe/formatters/detail/time_formatter.hpp>
 #include <regex>
 #include <iostream>
 

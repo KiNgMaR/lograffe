@@ -8,8 +8,8 @@
 #pragma once
 
 #include <lograffe/formatter.hpp>
-#include <lograffe/formatters/detail/logfmt_encoding_impl.hpp>
-#include <lograffe/formatters/detail/time_formatter_impl.hpp>
+#include <lograffe/formatters/detail/logfmt_encoding.hpp>
+#include <lograffe/formatters/detail/time_formatter.hpp>
 #include <string>
 
 namespace lograffe

@@ -26,9 +26,9 @@
     <ClInclude Include="..\include\lograffe\field.hpp" />
     <ClInclude Include="..\include\lograffe\fields.hpp" />
     <ClInclude Include="..\include\lograffe\formatter.hpp" />
-    <ClInclude Include="..\include\lograffe\formatters\detail\json_encoding_impl.hpp" />
-    <ClInclude Include="..\include\lograffe\formatters\detail\logfmt_encoding_impl.hpp" />
-    <ClInclude Include="..\include\lograffe\formatters\detail\time_formatter_impl.hpp" />
+    <ClInclude Include="..\include\lograffe\formatters\detail\json_encoding.hpp" />
+    <ClInclude Include="..\include\lograffe\formatters\detail\logfmt_encoding.hpp" />
+    <ClInclude Include="..\include\lograffe\formatters\detail\time_formatter.hpp" />
     <ClInclude Include="..\include\lograffe\formatters\detail\utf8_dfa.hpp" />
     <ClInclude Include="..\include\lograffe\formatters\json_formatter.hpp" />
     <ClInclude Include="..\include\lograffe\formatters\logfmt_formatter.hpp" />

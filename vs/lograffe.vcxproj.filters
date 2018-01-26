@@ -36,15 +36,6 @@
     <ClInclude Include="..\include\lograffe\formatter.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\lograffe\formatters\detail\json_encoding_impl.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\lograffe\formatters\detail\logfmt_encoding_impl.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\lograffe\formatters\detail\time_formatter_impl.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\lograffe\formatters\detail\utf8_dfa.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -97,6 +88,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\lograffe\writers\ostream_writer_ref.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\lograffe\formatters\detail\logfmt_encoding.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\lograffe\formatters\detail\json_encoding.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\lograffe\formatters\detail\time_formatter.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
