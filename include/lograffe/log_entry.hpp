@@ -118,10 +118,13 @@ namespace lograffe
 	private:
 		// keep a reference to a logger so we know where to send the complete entry
 		logger& logger_instance_;
-		const log_level level_;
-		// this is totally safe because it is expected to contain references to
+
+        const log_level level_;
+        // this is totally safe because it is expected to contain references to
 		// compile-time constants only:
 		const char* level_name_;
+
+        // log entry payload goes here:
 		const std::chrono::system_clock::time_point timestamp_;
 		lograffe::fields entry_fields_;
 		std::stringstream message_;

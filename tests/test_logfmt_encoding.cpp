@@ -7,7 +7,7 @@
 
 #include "catch.hpp"
 #include <lograffe/formatters/detail/logfmt_encoding.hpp>
-#include <iostream>
+#include <sstream>
 
 using namespace lograffe::formatters::detail;
 

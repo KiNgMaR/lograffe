@@ -139,8 +139,6 @@ namespace detail
 
 			return false;
 		}
-
-		constexpr static const char* HEXALPHA = "0123456789ABCDEF";
 	};
 
 }

@@ -28,7 +28,7 @@ namespace formatters
 			, field_name_message_("msg")
 		{}
 
-		virtual std::string format_entry(const log_entry& entry) override
+		std::string format_entry(const log_entry& entry) override
 		{
 			std::stringstream ss;
 
