@@ -21,7 +21,7 @@ namespace formatters
 namespace detail
 {
 
-	// Simplistic logfmt encoder. Does not care about the character set.
+	// Simplistic logfmt encoder. Expects UTF-8 encoded strings and replaces invalid UTF-8 with a unicode substitution character.
 	class logfmt_encoding
 	{
 	public:
