@@ -19,6 +19,8 @@
 //
 // See http://bjoern.hoehrmann.de/utf-8/decoder/dfa/ for details.
 
+#pragma once
+
 #include <cstdint>
 
 namespace utf8_dfa
