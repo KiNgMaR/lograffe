@@ -14,7 +14,7 @@ namespace lograffe
 	
 	inline bool logger::level_enabled(log_level level) const
 	{
-		return static_cast<uint_fast32_t>(level) >= enabled_levels_;
+		return (enabled_levels_ & static_cast<uint_fast32_t>(level)) == static_cast<uint_fast32_t>(level);
 	}
 
 	inline logger::attached_sink_handle logger::attach_sink(const std::shared_ptr<sink>& new_sink)
@@ -35,9 +35,7 @@ namespace lograffe
 
 	inline void logger::detach_sink(attached_sink_handle handle)
 	{
-		// TODO: this is ugly
-
-		const auto comparison = [handle](const auto& sink_ptr) -> bool
+		const auto comparison = [handle](const auto& sink_ptr)
 			{ return std::hash<void*>()(sink_ptr.get()) == handle; };
 
 		sinks_.erase(
