@@ -24,7 +24,7 @@ namespace lograffe
 
 		bool level_enabled(log_level level) const noexcept
 		{
-			return (level >= min_level_);
+			return (level <= min_level_);
 		}
 
 		log_level min_level() const noexcept
