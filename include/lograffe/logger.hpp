@@ -41,7 +41,24 @@ namespace lograffe
 		logger& operator=(logger&&) = default;
 
 	public:
-		typedef std::hash<void*>::result_type attached_sink_handle;
+        class attached_sink_handle
+        {
+        public:
+            attached_sink_handle()
+                : ptr_(nullptr)
+            {}
+            attached_sink_handle(const std::shared_ptr<sink>& sink)
+                : ptr_(sink.get())
+            {}
+            attached_sink_handle(const attached_sink_handle&) = default;
+            attached_sink_handle(attached_sink_handle&&) = default;
+
+            bool operator == (const attached_sink_handle& other) const { return ptr_ == other.ptr_; }
+            bool operator == (const std::shared_ptr<sink>& other) const { return ptr_ == other.get(); }
+
+        private:
+            const sink* ptr_; // do not derefence
+        };
 
 		attached_sink_handle attach_sink(const std::shared_ptr<sink>& new_sink);
 

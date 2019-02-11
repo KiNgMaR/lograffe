@@ -24,7 +24,7 @@ namespace lograffe
 			return attached_sink_handle();
 		}
 
-		attached_sink_handle new_sink_handle = std::hash<void*>()(new_sink.get());
+        attached_sink_handle new_sink_handle{ new_sink };
 
 		sinks_.emplace_back(std::move(new_sink));
 
@@ -36,12 +36,12 @@ namespace lograffe
 	inline void logger::detach_sink(attached_sink_handle handle)
 	{
 		const auto comparison = [handle](const auto& sink_ptr)
-			{ return std::hash<void*>()(sink_ptr.get()) == handle; };
+            { return handle == sink_ptr; };
 
 		sinks_.erase(
 			std::remove_if(sinks_.begin(), sinks_.end(), comparison),
 			sinks_.end());
-		
+
 		calculate_enabled_levels();
 	}
 
